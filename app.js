@@ -45,7 +45,11 @@ app.get("/products", async (req, res) => {
       createdAt: product.createdAt,
     }));
 
-    res.status(200).json(result);
+    //countDocuments(query) 검색된 상품만
+    const totalCount = await Productdata.countDocuments(query);
+
+    console.log({ list: result, totalCount });
+    res.status(200).json({ list: result, totalCount: totalCount });
   } catch (error) {
     res.status(500).json({
       message: error.message,
