@@ -1,7 +1,7 @@
 ###전체 상품 조회
-@baseUrl=http://localhost:3000
+@baseUrl=https://sprint5-api.onrender.com
 
-GET {{baseUrl}}/products?keyword=지갑
+GET {{baseUrl}}/products
 
 ###상세 상품 조회
 GET {{baseUrl}}/products/69fc1654dd4742b17fb9d5c4

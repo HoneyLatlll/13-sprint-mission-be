@@ -2,10 +2,13 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./db.js";
 import Productdata from "./models/Productdata.js";
+import cors from "cors";
 
 dotenv.config();
 
 const app = express();
+app.use(cors());
+console.log("CORS 적용됨");
 app.use(express.json());
 // const PORT = 3000; //이건 나중에 env파일로 이동할듯
 
