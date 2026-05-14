@@ -3,6 +3,9 @@
 ###
 GET {{BASE_URL}}/articles?keyword=게시글 1
 
+###상품 댓글 조회
+GET {{BASE_URL}}/products/143/comments
+
 ###
 POST {{BASE_URL}}/products
 Content-Type:application/json
@@ -23,13 +26,21 @@ Content-Type: application/json
   "content":"테스트 게시글 내용"
 }
 
-###
-
-PATCH {{BASE_URL}}/products/42
+###상품 댓글 추가
+POST {{BASE_URL}}/products/143/comments
 Content-Type: application/json
 
 {
-  "price":7000000
+  "content":"상품 댓글 추추추가"
+}
+
+###
+
+PATCH {{BASE_URL}}/products/143/comments/2
+Content-Type: application/json
+
+{
+  "content":"첫 상품 댓글 수정"
 }
 
 ###article patch

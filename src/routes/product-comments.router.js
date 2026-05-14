@@ -1,13 +1,19 @@
 import express from "express";
+import {
+  getProductComments,
+  postProductComments,
+  updateProductComments,
+} from "../controllers/product-comments.controller.js";
 
-const ProductCommentRouter = express.Router();
+//부모 라우터 server.js의 params를 자식 라우터 ProductComment에서도 접근할 수 있게 해주는 옵션
+const ProductCommentRouter = express.Router({ mergeParams: true });
 
-ProductCommentRouter.get("articles/", _);
+ProductCommentRouter.get("/", getProductComments);
 
-ProductCommentRouter.post("articles/", _);
+ProductCommentRouter.post("/", postProductComments);
 
-ProductCommentRouter.patch("articles/:id/", _);
+ProductCommentRouter.patch("/:id", updateProductComments);
 
-ProductCommentRouter.delete("articles/:id/", _);
+// ProductCommentRouter.delete("/:id", _);
 
 export default ProductCommentRouter;

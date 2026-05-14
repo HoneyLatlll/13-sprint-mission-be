@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use("/products", ProductRouter);
 app.use("/articles", ArticleRouter);
-app.use("/products/:id/comments", ProductCommentRouter);
+app.use("/products/:productId/comments", ProductCommentRouter);
 // app.use("/articles/:id/comments",ArticleCommentRouter);
 
 const PORT = process.env.PORT || 3000;
