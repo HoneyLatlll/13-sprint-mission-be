@@ -291,6 +291,26 @@ async function main() {
       content: "거래 후 솔직한 후기를 남기면 다음 거래에 도움이 돼요.",
     },
   });
+  const product1 = await prisma.product.create({
+    data: { name: "맥북", price: 780000, description: "상태 좋음" },
+  });
+
+  await prisma.productComment.create({
+    data: {
+      content: "상품 댓글 남겨봅니다",
+      productId: product1.id, // 방금 생성된 id 참조
+    },
+  });
+  const article1 = await prisma.article.create({
+    data: { title: "테스트 게시글", content: "테스트 내용" },
+  });
+
+  await prisma.articleComment.create({
+    data: {
+      content: "게시글 댓글 남겨봅니다",
+      articleId: article1.id,
+    },
+  });
 }
 
 main()
