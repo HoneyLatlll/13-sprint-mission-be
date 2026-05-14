@@ -1,7 +1,7 @@
 @BASE_URL=http://localhost:3000
 
 ###
-GET {{BASE_URL}}/products
+GET {{BASE_URL}}/articles?keyword=게시글 1
 
 ###
 POST {{BASE_URL}}/products
@@ -14,6 +14,15 @@ Content-Type:application/json
   "tags":["사람"]
 }
 
+###article post
+POST {{BASE_URL}}/articles
+Content-Type: application/json
+
+{
+  "title":"게시글 추가 테스트",
+  "content":"테스트 게시글 내용"
+}
+
 ###
 
 PATCH {{BASE_URL}}/products/42
@@ -23,5 +32,17 @@ Content-Type: application/json
   "price":7000000
 }
 
+###article patch
+PATCH {{BASE_URL}}/articles/1
+Content-Type: application/json
+
+{
+  "title":"첫번째 게시글 제목 수정",
+  "content":"첫번째 게시글 내용 수정"
+}
+
 ###
 DELETE {{BASE_URL}}/products/42
+
+###delete article
+DELETE  {{BASE_URL}}/articles/2
