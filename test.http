@@ -1,7 +1,7 @@
 @BASE_URL=http://localhost:3000
 
 ###
-GET {{BASE_URL}}/products/42
+GET {{BASE_URL}}/products
 
 ###
 POST {{BASE_URL}}/products

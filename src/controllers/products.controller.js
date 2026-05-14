@@ -1,8 +1,8 @@
 import prisma from "../lib/prisma.js";
 
-export const getProducts = async (req, res) => {
+export const getAllProducts = async (req, res) => {
   try {
-    const { page = "1", limit = "10", sort = "latest", keyword } = req.query;
+    const { page = "1", limit = "5", sort = "latest", keyword } = req.query;
 
     const where = {};
 
@@ -20,7 +20,7 @@ export const getProducts = async (req, res) => {
     }[sort] || { createdAt: "desc" };
 
     const pageNum = Number(page) || 1;
-    const take = Number(limit) || 10;
+    const take = Number(limit) || 5;
     const skip = (pageNum - 1) * take;
 
     const [products, total] = await Promise.all([
