@@ -1,4 +1,27 @@
 @BASE_URL=http://localhost:3000
 
 ###
-GET {{BASE_URL}}/products?keyword=에
+GET {{BASE_URL}}/products/42
+
+###
+POST {{BASE_URL}}/products
+Content-Type:application/json
+
+{
+  "name":"김민수",
+  "price":2000000,
+  "description":"무의식적으로 내이름 넣음",
+  "tags":["사람"]
+}
+
+###
+
+PATCH {{BASE_URL}}/products/42
+Content-Type: application/json
+
+{
+  "price":7000000
+}
+
+###
+DELETE {{BASE_URL}}/products/42
