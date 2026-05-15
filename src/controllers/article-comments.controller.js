@@ -3,16 +3,31 @@ import prisma from "../lib/prisma.js";
 export const getArticleComments = async (req, res) => {
   try {
     const { articleId } = req.params;
+    const { limit = 3, cursor } = req.query;
 
     const comments = await prisma.articleComment.findMany({
       where: { articleId: Number(articleId) },
+      take: Number(limit) + 1,
+      skip: cursor ? 1 : 0,
+      cursor: cursor ? { id: Number(cursor) } : undefined,
       select: {
         id: true,
         content: true,
         createdAt: true,
       },
+      orderBy: { createdAt: "desc" },
     });
-    res.json({ success: true, count: comments.length, data: comments });
+
+    const nextCursor =
+      comments.length === Number(limit) + 1 //댓글의 수가 limit을 넘었을 때
+        ? comments[comments.length - 1].id
+        : null;
+
+    res.json({
+      success: true,
+      data: comments.slice(0, Number(limit)), //limit수 만큼 반환해야해서
+      nextCursor,
+    });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

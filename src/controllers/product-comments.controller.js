@@ -3,16 +3,31 @@ import prisma from "../lib/prisma.js";
 export const getProductComments = async (req, res) => {
   try {
     const { productId } = req.params;
+    const { cursor, limit = 3 } = req.query;
 
     const comments = await prisma.productComment.findMany({
+      take: Number(limit) + 1,
+      skip: cursor ? 1 : 0,
+      cursor: cursor ? { id: Number(cursor) } : undefined,
       where: { productId: Number(productId) },
       select: {
         id: true,
         content: true,
         createdAt: true,
       },
+      orderBy: { createdAt: "desc" },
     });
-    res.json({ success: true, count: comments.length, data: comments });
+
+    const nextCursor =
+      comments.length === Number(limit) + 1
+        ? comments[comments.length - 1].id
+        : null;
+
+    res.json({
+      success: true,
+      data: comments.slice(0, Number(limit)),
+      nextCursor,
+    });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

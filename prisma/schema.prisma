@@ -18,7 +18,7 @@ model Product {
   name            String
   price           Int
   description     String
-  tags            String[]
+  tags            String[] //이거 엔티티로 뽑아내야함 하나의 column에는 하나의 데이터만 있는게 좋음 (정규화 1원칙)
   createdAt       DateTime         @default(now()) @map("created_at")
   updatedAt       DateTime         @updatedAt @map("updated_at")
   productComments ProductComment[]
