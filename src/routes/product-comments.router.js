@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  deleteProductComments,
   getProductComments,
   postProductComments,
   updateProductComments,
@@ -14,6 +15,6 @@ ProductCommentRouter.post("/", postProductComments);
 
 ProductCommentRouter.patch("/:id", updateProductComments);
 
-// ProductCommentRouter.delete("/:id", _);
+ProductCommentRouter.delete("/:id", deleteProductComments);
 
 export default ProductCommentRouter;

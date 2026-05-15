@@ -53,3 +53,22 @@ export const updateProductComments = async (req, res) => {
     res.status(400).json({ success: false, message: err.message });
   }
 };
+
+export const deleteProductComments = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await prisma.productComment.delete({
+      where: { id: Number(id) },
+    });
+    res.json({ success: true, message: "댓글이 정상적으로 삭제 되었습니다" });
+  } catch (err) {
+    if (err.code === "P2025") {
+      return res
+        .status(404)
+        .json({ success: false, message: "없는 댓글 id입니다." });
+    }
+
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
