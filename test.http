@@ -1,10 +1,10 @@
 @BASE_URL=http://localhost:3000
 
 ###
-GET {{BASE_URL}}/articles?keyword=게시글 1
+GET {{BASE_URL}}/articles
 
 ###상품 댓글 조회
-GET {{BASE_URL}}/products/143/comments
+GET {{BASE_URL}}/articles/87/comments
 
 ###
 POST {{BASE_URL}}/products
@@ -27,20 +27,20 @@ Content-Type: application/json
 }
 
 ###상품 댓글 추가
-POST {{BASE_URL}}/products/143/comments
+POST {{BASE_URL}}/articles/87/comments
 Content-Type: application/json
 
 {
-  "content":"상품 댓글 추추추가"
+  "content":"상품에 댓글 추추추가"
 }
 
 ###
 
-PATCH {{BASE_URL}}/products/143/comments/2
+PATCH {{BASE_URL}}/articles/87/comments/1
 Content-Type: application/json
 
 {
-  "content":"첫 상품 댓글 수정"
+  "content":"첫 게시글 댓글 수정"
 }
 
 ###article patch
@@ -59,4 +59,4 @@ DELETE {{BASE_URL}}/products/42
 DELETE  {{BASE_URL}}/articles/2
 
 ###댓글 삭제
-DELETE {{BASE_URL}}/products/143/comments/2
+DELETE {{BASE_URL}}/articles/87/comments/1

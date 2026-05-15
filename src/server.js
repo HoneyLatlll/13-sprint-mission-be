@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import ProductRouter from "./routes/products.router.js";
 import ArticleRouter from "./routes/articles.router.js";
 import ProductCommentRouter from "./routes/product-comments.router.js";
+import ArticleCommentRouter from "./routes/article-comments.router.js";
 
 dotenv.config();
 
@@ -11,7 +12,7 @@ app.use(express.json());
 app.use("/products", ProductRouter);
 app.use("/articles", ArticleRouter);
 app.use("/products/:productId/comments", ProductCommentRouter);
-// app.use("/articles/:id/comments",ArticleCommentRouter);
+app.use("/articles/:articleId/comments", ArticleCommentRouter);
 
 const PORT = process.env.PORT || 3000;
 
