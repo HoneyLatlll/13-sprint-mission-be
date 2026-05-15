@@ -1,4 +1,5 @@
 import express from "express";
+import { asyncHandler } from "../utils/asyncHandler.js";
 import {
   deleteArticleComments,
   getArticleComments,
@@ -8,12 +9,12 @@ import {
 
 const ArticleCommentRouter = express.Router({ mergeParams: true });
 
-ArticleCommentRouter.get("/", getArticleComments);
+ArticleCommentRouter.get("/", asyncHandler(getArticleComments));
 
-ArticleCommentRouter.post("/", postArticleComments);
+ArticleCommentRouter.post("/", asyncHandler(postArticleComments));
 
-ArticleCommentRouter.patch("/:id", updateArticleComments);
+ArticleCommentRouter.patch("/:id", asyncHandler(updateArticleComments));
 
-ArticleCommentRouter.delete("/:id", deleteArticleComments);
+ArticleCommentRouter.delete("/:id", asyncHandler(deleteArticleComments));
 
 export default ArticleCommentRouter;
