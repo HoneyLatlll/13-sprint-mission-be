@@ -1,7 +1,7 @@
 @BASE_URL=http://localhost:3000
 
 ###
-GET {{BASE_URL}}/products/123.5
+GET {{BASE_URL}}/products?limit=5
 
 ###상품 댓글 조회
 GET {{BASE_URL}}/articles/1111/comments

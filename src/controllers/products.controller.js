@@ -1,5 +1,6 @@
 import prisma from "../lib/prisma.js";
 import {
+  getProductSchema,
   postProductSchema,
   productIdSchema,
   updateProductSchema,
@@ -7,14 +8,15 @@ import {
 
 export const getAllProducts = async (req, res) => {
   try {
-    const { page = "1", limit = "10", sort = "latest", keyword } = req.query;
+    // const { page = "1", limit = "10", sort = "latest", keyword } = req.query;
+    const validate = getProductSchema.parse(req.query);
 
     const where = {};
 
-    if (keyword) {
+    if (validate.keyword) {
       where.OR = [
-        { name: { contains: keyword } },
-        { description: { contains: keyword } },
+        { name: { contains: validate.keyword } },
+        { description: { contains: validate.keyword } },
       ];
     }
 
@@ -22,10 +24,10 @@ export const getAllProducts = async (req, res) => {
       latest: { createdAt: "desc" },
       oldest: { createdAt: "asc" },
       name: { name: "asc" },
-    }[sort] || { createdAt: "desc" };
+    }[validate.sort] || { createdAt: "desc" };
 
-    const pageNum = Number(page) || 1;
-    const take = Number(limit) || 10;
+    const pageNum = Number(validate.page) || 1;
+    const take = Number(validate.limit) || 10;
     const skip = (pageNum - 1) * take;
 
     const [products, total] = await Promise.all([
@@ -44,6 +46,12 @@ export const getAllProducts = async (req, res) => {
       },
     });
   } catch (err) {
+    if (err.name === "ZodError") {
+      return res.status(400).json({
+        success: false,
+        message: "올바른 데이터형식 아님",
+      });
+    }
     res.status(500).json({ success: false, message: err.message });
   }
 };

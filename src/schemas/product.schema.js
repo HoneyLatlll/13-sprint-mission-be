@@ -16,7 +16,7 @@ export const postProductSchema = z.object({
 
 export const updateProductSchema = z.object({
   name: z.string().min(1).max(100).optional(),
-  price: z.int().min(1).optional(),
+  price: z.number().int().min(1).optional(),
   description: z.string().min(1).max(1000),
   tags: z.array(z.string()).optional(),
 });
@@ -24,4 +24,11 @@ export const updateProductSchema = z.object({
 export const productIdSchema = z.object({
   id: z.coerce.number().int().positive(),
   //.positive는 양수만 허용함
+});
+
+export const getProductSchema = z.object({
+  page: z.coerce.number().int().positive().optional(),
+  limit: z.coerce.number().int().positive().optional(),
+  sort: z.string().optional(),
+  keyword: z.string().optional(),
 });
