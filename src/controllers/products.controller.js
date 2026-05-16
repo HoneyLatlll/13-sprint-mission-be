@@ -1,4 +1,9 @@
 import prisma from "../lib/prisma.js";
+import {
+  postProductSchema,
+  productIdSchema,
+  updateProductSchema,
+} from "../schemas/product.schema.js";
 
 export const getAllProducts = async (req, res) => {
   try {
@@ -45,9 +50,10 @@ export const getAllProducts = async (req, res) => {
 
 export const getProduct = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = productIdSchema.parse(req.params);
+    //여기서의 .parse는 zod 스키마 메서드로 입력값 받아서 유효성검사 후 변환된 값 반환하는 함수 JSON.parse와 다른 parse임
     const product = await prisma.product.findUnique({
-      where: { id: Number(id) },
+      where: { id },
     });
 
     if (!product) {
@@ -56,16 +62,24 @@ export const getProduct = async (req, res) => {
 
     res.json({ success: true, data: product });
   } catch (err) {
+    if (err.name === "ZodError") {
+      return res.status(400).json({
+        success: false,
+        message: "올바른 데이터형식 아님",
+      });
+    }
+
     res.status(500).json({ success: false, message: err.message });
   }
 };
 
 export const postProduct = async (req, res) => {
   try {
-    const { name, price, description, tags } = req.body;
+    // const { name, price, description, tags } = req.body;
+    const validated = postProductSchema.parse(req.body);
 
     const product = await prisma.product.create({
-      data: { name, price, description, tags },
+      data: validated,
     });
 
     res.status(201).json({
@@ -73,23 +87,32 @@ export const postProduct = async (req, res) => {
       data: product,
     });
   } catch (err) {
-    res.status(400).json({
-      success: false,
-      message: err.message,
-    });
+    if (err.name === "ZodError") {
+      return res.status(400).json({
+        success: false,
+        message: "입력 데이터가 이상함",
+      });
+    }
+    res.status(500).json({ success: false, message: err.message });
   }
 };
 
 export const updateProduct = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = productIdSchema.parse(req.params);
+    const data = updateProductSchema.parse(req.body);
     const product = await prisma.product.update({
-      where: { id: Number(id) },
-      data: req.body,
+      // where: { id: Number(id) },
+      where: { id },
+      data,
     });
     res.json({ success: true, data: product });
   } catch (err) {
     //update는 해당 id를 못찾으면 prisma가 자동으로 error를 던지기 때문에 catch에서 잡는것이 자연스러움
+    if (err.name === "ZodError") {
+      return res.status(400).json({ success: false, message: err.errors });
+    }
+
     if (err.code === "P2025") {
       return res
         .status(404)

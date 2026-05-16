@@ -1,7 +1,7 @@
 @BASE_URL=http://localhost:3000
 
 ###
-GET {{BASE_URL}}/articles
+GET {{BASE_URL}}/products/123.5
 
 ###상품 댓글 조회
 GET {{BASE_URL}}/articles/1111/comments
@@ -11,7 +11,7 @@ POST {{BASE_URL}}/products
 Content-Type:application/json
 
 {
-  "name":"김민수",
+  "name":"a",
   "price":2000000,
   "description":"무의식적으로 내이름 넣음",
   "tags":["사람"]
