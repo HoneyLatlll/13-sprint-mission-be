@@ -4,7 +4,7 @@
 GET {{BASE_URL}}/products?limit=5
 
 ###상품 댓글 조회
-GET {{BASE_URL}}/articles/1111/comments
+GET {{BASE_URL}}/articles/87/comments
 
 ###
 POST {{BASE_URL}}/products

@@ -1,14 +1,20 @@
 import prisma from "../lib/prisma.js";
+import {
+  articleIdSchema,
+  getArticleCommentsSchema,
+} from "../schemas/article-comments.schema.js";
 
 export const getArticleComments = async (req, res) => {
-  const { articleId } = req.params;
-  const { limit = 3, cursor } = req.query;
+  // const { articleId } = req.params;
+  // const { limit = 3, cursor } = req.query;
+  const { articleId } = articleIdSchema.parse(req.params);
+  const validate = getArticleCommentsSchema.parse(req.query);
 
   const comments = await prisma.articleComment.findMany({
-    where: { articleId: Number(articleId) },
-    take: Number(limit) + 1,
-    skip: cursor ? 1 : 0,
-    cursor: cursor ? { id: Number(cursor) } : undefined,
+    where: { articleId },
+    take: validate.limit + 1,
+    skip: validate.cursor ? 1 : 0,
+    cursor: validate.cursor ? { id: validate.cursor } : undefined,
     select: {
       id: true,
       content: true,
@@ -18,13 +24,13 @@ export const getArticleComments = async (req, res) => {
   });
 
   const nextCursor =
-    comments.length === Number(limit) + 1 //댓글의 수가 limit을 넘었을 때
+    comments.length === validate.limit + 1 //댓글의 수가 limit을 넘었을 때
       ? comments[comments.length - 1].id
       : null;
 
   res.json({
     success: true,
-    data: comments.slice(0, Number(limit)), //limit수 만큼 반환해야해서
+    data: comments.slice(0, validate.limit), //limit수 만큼 반환해야해서
     nextCursor,
   });
 };
