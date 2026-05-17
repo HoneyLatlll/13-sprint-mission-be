@@ -2,6 +2,7 @@ import prisma from "../src/lib/prisma.js";
 
 async function main() {
   await prisma.product.deleteMany();
+  await prisma.article.deleteMany();
   console.log("기존 데이터 삭제 완료");
 
   await prisma.product.create({
