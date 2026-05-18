@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 export const getArticleCommentsSchema = z.object({
-  articleId: z.coerce.number().int().positive().optional(),
   limit: z.coerce.number().int().positive().default(3),
   cursor: z.coerce.number().int().positive().optional(),
 });
