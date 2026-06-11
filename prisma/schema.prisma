@@ -32,6 +32,7 @@ model Article {
   content         String
   createdAt       DateTime         @default(now()) @map("created_at")
   updatedAt       DateTime         @updatedAt @map("updated_at")
+  favorite        Int              @default(0)
   articleComments ArticleComment[]
 
   @@map("articles")

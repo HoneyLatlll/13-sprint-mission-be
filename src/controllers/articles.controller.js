@@ -18,6 +18,7 @@ export const getAllArticles = async (req, res) => {
       latest: { createdAt: "desc" },
       oldest: { createdAt: "asc" },
       title: { title: "asc" },
+      favoritest: { favorite: "desc" },
     }[sort] || { createdAt: "desc" };
 
     const pageNum = Number(page) || 1;
