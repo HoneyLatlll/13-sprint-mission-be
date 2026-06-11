@@ -1,10 +1,10 @@
-@BASE_URL=http://localhost:3000
+@BASE_URL=https://sprint6-api-0uim.onrender.com
 
 ###
 GET {{BASE_URL}}/products?limit=5
 
 ###상품 댓글 조회
-GET {{BASE_URL}}/articles/87/comments
+GET {{BASE_URL}}/articles/22/comments
 
 ###
 POST {{BASE_URL}}/products

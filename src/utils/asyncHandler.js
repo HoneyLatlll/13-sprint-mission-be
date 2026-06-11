@@ -1,11 +1,11 @@
 import { Prisma } from "@prisma/client";
 import { HttpError } from "./error.js";
 
-export const asyncHandler = (handler) => async (req, res, next) => {
+export const asyncHandler = (handler) => async (req, res) => {
   try {
-    await handler(req, res, next);
+    await handler(req, res);
   } catch (err) {
-    //우리가 직접 던진 HTTP 에러 400,404 같은
+    //우리가 직접 던진 HTTP 에러 400,404 같은 error.js에 처리해놓은 에러 발생시
     if (err instanceof HttpError) {
       return res.status(err.statusCode).json({
         success: false,
@@ -46,6 +46,7 @@ export const asyncHandler = (handler) => async (req, res, next) => {
       });
     }
 
+    //zod 에러 처리
     if (err.name === "ZodError") {
       return res.status(400).json({
         success: false,
@@ -53,6 +54,7 @@ export const asyncHandler = (handler) => async (req, res, next) => {
       });
     }
 
+    //이외에 서버 에러 처리
     console.error(error);
     res.status(500).json({
       success: false,
