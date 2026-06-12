@@ -4,12 +4,16 @@ import ProductRouter from "./routes/products.router.js";
 import ArticleRouter from "./routes/articles.router.js";
 import ProductCommentRouter from "./routes/product-comments.router.js";
 import ArticleCommentRouter from "./routes/article-comments.router.js";
+import cors from "cors";
 
 const envFile = `.env.${process.env.NODE_ENV || "development"}`;
 dotenv.config({ path: envFile });
 
 const app = express();
+
+app.use(cors());
 app.use(express.json());
+
 app.use("/products", ProductRouter);
 app.use("/articles", ArticleRouter);
 app.use("/products/:productId/comments", ProductCommentRouter);

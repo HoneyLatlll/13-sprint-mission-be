@@ -33,6 +33,7 @@ model Article {
   createdAt       DateTime         @default(now()) @map("created_at")
   updatedAt       DateTime         @updatedAt @map("updated_at")
   favorite        Int              @default(0)
+  userName        String           @default("총명한판다")
   articleComments ArticleComment[]
 
   @@map("articles")
