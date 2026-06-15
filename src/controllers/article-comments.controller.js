@@ -19,6 +19,11 @@ export const getArticleComments = async (req, res) => {
       id: true,
       content: true,
       createdAt: true,
+      article: {
+        select: {
+          userName: true,
+        },
+      },
     },
     orderBy: { createdAt: "desc" },
   });

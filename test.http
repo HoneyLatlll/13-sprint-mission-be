@@ -4,7 +4,7 @@
 GET {{BASE_URL}}/products?limit=5
 
 ###상품 댓글 조회
-GET {{BASE_URL}}/articles
+GET {{BASE_URL}}/articles/24/comments
 
 ###
 POST {{BASE_URL}}/products
@@ -27,11 +27,11 @@ Content-Type: application/json
 }
 
 ###상품 댓글 추가
-POST {{BASE_URL}}/articles/143/comments
+POST {{BASE_URL}}/articles/24/comments
 Content-Type: application/json
 
 {
-  "content":"상품에 댓글 추추추가"
+  "content":"상품에 댓글 추가4"
 }
 
 ###

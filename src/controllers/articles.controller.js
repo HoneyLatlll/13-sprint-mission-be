@@ -10,7 +10,8 @@ export const getAllArticles = async (req, res) => {
       // where["title"] = { contains: keyword } where.title= ... 둘은 같음
       where.OR = [
         { title: { contains: keyword } },
-        { content: { contains: keyword } },
+        // 게시글 내용까지 키워드로 할 필요는 없을 듯
+        // { content: { contains: keyword } },
       ];
     }
 
