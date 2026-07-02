@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// Prisma 클라이언트 설정
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 데이터베이스 연결 설정
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                Int       @id @default(autoincrement())
+  email             String    @unique
+  nickname          String?
+  encryptedPassword String?
+  image             String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  products          Product[]
+  likes             Like[]
+}
+
+model Product {
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    Int
+  id          Int      @id @default(autoincrement())
+  images      String[]
+  price       Int
+  tags        String[]
+  name        String
+  description String
+  likeCount   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  likes       Like[]
+}
+
+model Like {
+  userId    Int
+  productId Int
+  user      User    @relation(fields: [userId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@id([userId, productId])
+}
