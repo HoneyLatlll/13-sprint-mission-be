@@ -4,8 +4,11 @@ import prisma from "../config/prisma.js";
 const createUser = async (req, res, next) => {
   try {
     const { email, name, password } = req.body;
-    if (!email || !name || !password)
-      throw new Error("이메일 이름 비밀번호 모두 필요합니다");
+    if (!email || !name || !password) {
+      const error = new Error("이메일 이름 비밀번호 모두 필요합니다");
+      error.code = 400;
+      throw error;
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -22,7 +25,7 @@ const createUser = async (req, res, next) => {
 
     res.status(201).json(safeUserData);
   } catch (err) {
-    console.error(err.message);
+    next(err);
   }
 };
 

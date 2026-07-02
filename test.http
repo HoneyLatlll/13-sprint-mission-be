@@ -1,6 +1,6 @@
 @BASE_URL=http://localhost:3001
 
-###
+### 회원가입 테스트
 POST {{BASE_URL}}/users
 Content-Type:application/json
 
