@@ -1,0 +1,11 @@
+@BASE_URL=http://localhost:3001
+
+###
+POST {{BASE_URL}}/users
+Content-Type:application/json
+
+{
+  "email":"rat@rat.com",
+  "name":"minsu",
+  "password":"ratratrat"
+}
