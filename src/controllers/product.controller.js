@@ -2,7 +2,7 @@ import prisma from "../config/prisma.js";
 
 const createProduct = async (req, res, next) => {
   const authorId = req.auth.userId;
-  const images = req.files.map((file) => file.path);
+  const images = req.files.map((file) => `uploads/${file.filename}`);
 
   const createdProduct = await prisma.product.create({
     data: {
