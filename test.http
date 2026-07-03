@@ -15,6 +15,17 @@ POST {{BASE_URL}}/users/login
 Content-Type:application/json
 
 {
-  "email":"rat@rat.co",
-  "password":"ratratra"
+  "email":"rat@rat.com",
+  "password":"ratratrat"
+}
+
+### 상품 생성 테스트
+POST {{BASE_URL}}/products
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzA0MTg1OSwiZXhwIjoxNzgzMDQ1NDU5fQ.035cQQGRWxuNk_8L6A38yxujyfW7yANPJllE21vLEhw
+
+{
+  "price":20000,
+  "name":"상품이름1",
+  "description":"상품소개1"
 }
