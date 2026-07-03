@@ -7,3 +7,7 @@ node_modules/
 !.env.example
 
 /src/generated/prisma
+
+# uploaded files / test fixtures
+/uploads/
+/test-assets/

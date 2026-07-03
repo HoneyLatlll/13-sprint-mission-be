@@ -29,3 +29,63 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhd
   "name":"상품이름1",
   "description":"상품소개1"
 }
+
+# ### 상품 등록 테스트 (이미지 2개)
+# POST {{BASE_URL}}/products
+# Content-Type: multipart/form-data; boundary=----boundary
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzA1NTA5MywiZXhwIjoxNzgzMDU4NjkzfQ.-ZtzJ-hpRB6ckQzwQRm_Rb0qJr2FbRxgBZZzhUd25Zg
+
+# ------boundary
+# Content-Disposition: form-data; name="name"
+
+# 상품이름3
+# ------boundary
+# Content-Disposition: form-data; name="description"
+
+# 상품소개3
+# ------boundary
+# Content-Disposition: form-data; name="price"
+
+# 33333
+# ------boundary
+# Content-Disposition: form-data; name="images"; filename="a.jpg"
+# Content-Type: image/jpeg
+# ------boundary--
+
+# < ./test-assets/a.jpg
+# ------boundary
+# Content-Disposition: form-data; name="images"; filename="b.jpg"
+# Content-Type: image/jpeg
+
+# < ./test-assets/b.jpg
+# ------boundary--
+
+###
+### 상품 등록 테스트 (이미지 2개)
+POST {{BASE_URL}}/products
+Content-Type: multipart/form-data; boundary=----boundary
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzA1NTA5MywiZXhwIjoxNzgzMDU4NjkzfQ.-ZtzJ-hpRB6ckQzwQRm_Rb0qJr2FbRxgBZZzhUd25Zg
+
+------boundary
+Content-Disposition: form-data; name="name"
+
+상품이름3
+------boundary
+Content-Disposition: form-data; name="description"
+
+상품소개3
+------boundary
+Content-Disposition: form-data; name="price"
+
+33333
+------boundary
+Content-Disposition: form-data; name="images"; filename="a.jpg"
+Content-Type: image/jpeg
+
+< ./test-assets/a.jpg
+------boundary
+Content-Disposition: form-data; name="images"; filename="b.jpg"
+Content-Type: image/jpeg
+
+< ./test-assets/b.jpg
+------boundary--
