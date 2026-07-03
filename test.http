@@ -64,20 +64,20 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhd
 ### 상품 등록 테스트 (이미지 2개)
 POST {{BASE_URL}}/products
 Content-Type: multipart/form-data; boundary=----boundary
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzA1NTA5MywiZXhwIjoxNzgzMDU4NjkzfQ.-ZtzJ-hpRB6ckQzwQRm_Rb0qJr2FbRxgBZZzhUd25Zg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzA2NDM1MSwiZXhwIjoxNzgzMDY3OTUxfQ.KZ42KGwwUnbI6eIKJshY2-ZU5EC19W98KVNt3-MpBto
 
 ------boundary
 Content-Disposition: form-data; name="name"
 
-상품이름3
+상품이름6
 ------boundary
 Content-Disposition: form-data; name="description"
 
-상품소개3
+상품소개6
 ------boundary
 Content-Disposition: form-data; name="price"
 
-33333
+66666
 ------boundary
 Content-Disposition: form-data; name="images"; filename="a.jpg"
 Content-Type: image/jpeg
@@ -88,4 +88,28 @@ Content-Disposition: form-data; name="images"; filename="b.jpg"
 Content-Type: image/jpeg
 
 < ./test-assets/b.jpg
+------boundary
+Content-Disposition: form-data; name="tags"
+
+중고
+------boundary
+Content-Disposition: form-data; name="tags"
+
+인기
+------boundary
+Content-Disposition: form-data; name="tags"
+
+신규
+------boundary
+Content-Disposition: form-data; name="tags"
+
+중고
+------boundary
+Content-Disposition: form-data; name="tags"
+
+중고
+------boundary
+Content-Disposition: form-data; name="tags"
+
+중고
 ------boundary--

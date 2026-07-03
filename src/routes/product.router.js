@@ -3,6 +3,7 @@ import productController from "../controllers/product.controller.js";
 import verifyAccessToken from "../middlewares/auth.js";
 import multer from "multer";
 import path from "path";
+import validateProduct from "../middlewares/validators/product.validator.js";
 
 const productRouter = express.Router();
 
@@ -18,6 +19,7 @@ productRouter.post(
   "/",
   verifyAccessToken,
   upload.array("images", 3),
+  validateProduct,
   productController.createProduct,
 );
 
