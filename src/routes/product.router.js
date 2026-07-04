@@ -23,4 +23,10 @@ productRouter.post(
   productController.createProduct,
 );
 
+productRouter.delete(
+  "/:productId",
+  verifyAccessToken,
+  productController.deleteProduct,
+);
+
 export default productRouter;

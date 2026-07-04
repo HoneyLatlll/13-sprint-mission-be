@@ -113,3 +113,7 @@ Content-Disposition: form-data; name="tags"
 
 중고
 ------boundary--
+
+###상품 삭제 테스트
+DELETE {{BASE_URL}}/products/999
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzE0NTg4MywiZXhwIjoxNzgzMTQ5NDgzfQ.oN8C02V9GcH2BYLADi4LjGmZ3wc_YbPAfr_g-Z5sMuo
