@@ -19,7 +19,7 @@ productRouter.post(
   "/",
   verifyAccessToken,
   upload.array("images", 3),
-  validateProduct,
+  validateProduct.validateCreateProduct,
   productController.createProduct,
 );
 
@@ -27,6 +27,14 @@ productRouter.delete(
   "/:productId",
   verifyAccessToken,
   productController.deleteProduct,
+);
+
+productRouter.patch(
+  "/:productId",
+  verifyAccessToken,
+  upload.array("images", 3),
+  validateProduct.validateUpdateProduct,
+  productController.updateProduct,
 );
 
 export default productRouter;

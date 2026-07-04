@@ -19,65 +19,23 @@ Content-Type:application/json
   "password":"ratratrat"
 }
 
-### 상품 생성 테스트
-POST {{BASE_URL}}/products
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzA0MTg1OSwiZXhwIjoxNzgzMDQ1NDU5fQ.035cQQGRWxuNk_8L6A38yxujyfW7yANPJllE21vLEhw
-
-{
-  "price":20000,
-  "name":"상품이름1",
-  "description":"상품소개1"
-}
-
-# ### 상품 등록 테스트 (이미지 2개)
-# POST {{BASE_URL}}/products
-# Content-Type: multipart/form-data; boundary=----boundary
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzA1NTA5MywiZXhwIjoxNzgzMDU4NjkzfQ.-ZtzJ-hpRB6ckQzwQRm_Rb0qJr2FbRxgBZZzhUd25Zg
-
-# ------boundary
-# Content-Disposition: form-data; name="name"
-
-# 상품이름3
-# ------boundary
-# Content-Disposition: form-data; name="description"
-
-# 상품소개3
-# ------boundary
-# Content-Disposition: form-data; name="price"
-
-# 33333
-# ------boundary
-# Content-Disposition: form-data; name="images"; filename="a.jpg"
-# Content-Type: image/jpeg
-# ------boundary--
-
-# < ./test-assets/a.jpg
-# ------boundary
-# Content-Disposition: form-data; name="images"; filename="b.jpg"
-# Content-Type: image/jpeg
-
-# < ./test-assets/b.jpg
-# ------boundary--
-
-###
 ### 상품 등록 테스트 (이미지 2개)
 POST {{BASE_URL}}/products
 Content-Type: multipart/form-data; boundary=----boundary
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzA2NDM1MSwiZXhwIjoxNzgzMDY3OTUxfQ.KZ42KGwwUnbI6eIKJshY2-ZU5EC19W98KVNt3-MpBto
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzE1MzA5OCwiZXhwIjoxNzgzMjM5NDk4fQ.Jw0GsyYzfj2zzzWPHFfKOZ3z5fdYCOPN4R8m4f2ApVg
 
 ------boundary
 Content-Disposition: form-data; name="name"
 
-상품이름6
+상품이름7
 ------boundary
 Content-Disposition: form-data; name="description"
 
-상품소개6
+상품소개7
 ------boundary
 Content-Disposition: form-data; name="price"
 
-66666
+77777
 ------boundary
 Content-Disposition: form-data; name="images"; filename="a.jpg"
 Content-Type: image/jpeg
@@ -100,14 +58,25 @@ Content-Disposition: form-data; name="tags"
 Content-Disposition: form-data; name="tags"
 
 신규
-------boundary
-Content-Disposition: form-data; name="tags"
+------boundary--
 
-중고
-------boundary
-Content-Disposition: form-data; name="tags"
+### 상품 등록 테스트 (이미지 없음)
+POST {{BASE_URL}}/products
+Content-Type: multipart/form-data; boundary=----boundary
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzE1MzA5OCwiZXhwIjoxNzgzMjM5NDk4fQ.Jw0GsyYzfj2zzzWPHFfKOZ3z5fdYCOPN4R8m4f2ApVg
 
-중고
+------boundary
+Content-Disposition: form-data; name="name"
+
+상품이름7
+------boundary
+Content-Disposition: form-data; name="description"
+
+상품소개7
+------boundary
+Content-Disposition: form-data; name="price"
+
+77777
 ------boundary
 Content-Disposition: form-data; name="tags"
 
@@ -116,4 +85,36 @@ Content-Disposition: form-data; name="tags"
 
 ###상품 삭제 테스트
 DELETE {{BASE_URL}}/products/999
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzE0NTg4MywiZXhwIjoxNzgzMTQ5NDgzfQ.oN8C02V9GcH2BYLADi4LjGmZ3wc_YbPAfr_g-Z5sMuo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzE1MzA5OCwiZXhwIjoxNzgzMjM5NDk4fQ.Jw0GsyYzfj2zzzWPHFfKOZ3z5fdYCOPN4R8m4f2ApVg
+
+###상품 수정 테스트
+PATCH {{BASE_URL}}/products/12
+Content-Type: multipart/form-data; boundary=----boundary
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzE1MzA5OCwiZXhwIjoxNzgzMjM5NDk4fQ.Jw0GsyYzfj2zzzWPHFfKOZ3z5fdYCOPN4R8m4f2ApVg
+
+------boundary
+Content-Disposition: form-data; name="name"
+
+상품이름수정
+------boundary
+Content-Disposition: form-data; name="description"
+
+상품소개수정
+------boundary
+Content-Disposition: form-data; name="price"
+
+66667
+------boundary
+Content-Disposition: form-data; name="tags"
+
+중고
+------boundary
+Content-Disposition: form-data; name="tags"
+
+인기
+------boundary
+Content-Disposition: form-data; name="images"; filename="a.jpg"
+Content-Type: image/jpeg
+
+< ./test-assets/a.jpg
+------boundary--
