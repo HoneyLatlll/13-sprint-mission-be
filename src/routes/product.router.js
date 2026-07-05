@@ -39,4 +39,6 @@ productRouter.patch(
   productController.updateProduct,
 );
 
+productRouter.get("/", productController.getProductList);
+
 export default productRouter;

@@ -118,3 +118,6 @@ Content-Type: image/jpeg
 
 < ./test-assets/a.jpg
 ------boundary--
+
+### 상품 목록 조회
+GET {{BASE_URL}}/products?sort=favorite&keyword=루

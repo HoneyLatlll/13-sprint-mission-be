@@ -95,4 +95,32 @@ const updateProduct = async (req, res, next) => {
   res.status(200).json(updatedProduct);
 };
 
-export default { createProduct, deleteProduct, updateProduct };
+const getProductList = async (req, res, next) => {
+  const { page = 1, pageSize = 10, sort = "recent", keyword } = req.query;
+
+  const skip = (Number(page) - 1) * Number(pageSize);
+  const take = Number(pageSize);
+
+  const where = keyword
+    ? {
+        //insensitive는 영어 검색시 대소문자 구분 X
+        OR: [{ name: { contains: keyword, mode: "insensitive" } }],
+      }
+    : {};
+  const sortBy =
+    sort === "favorite" ? { likeCount: "desc" } : { createdAt: "desc" };
+
+  const [products, totalProducts] = await Promise.all([
+    prisma.product.findMany({
+      where,
+      orderBy: sortBy,
+      skip,
+      take,
+    }),
+    prisma.product.count({ where }),
+  ]);
+
+  res.status(200).json({ list: products, totalProducts });
+};
+
+export default { createProduct, deleteProduct, updateProduct, getProductList };
