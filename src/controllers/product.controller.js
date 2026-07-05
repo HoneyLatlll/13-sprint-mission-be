@@ -96,12 +96,7 @@ const updateProduct = async (req, res, next) => {
 };
 
 const getProductList = async (req, res, next) => {
-  const {
-    page = 1,
-    pageSize = 10,
-    sort = "recent",
-    keyword,
-  } = req.validateQuery;
+  const { page, pageSize, sort, keyword } = req.validateQuery;
 
   const skip = (Number(page) - 1) * Number(pageSize);
   const take = Number(pageSize);
