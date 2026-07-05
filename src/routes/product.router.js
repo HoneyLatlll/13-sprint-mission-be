@@ -39,6 +39,10 @@ productRouter.patch(
   productController.updateProduct,
 );
 
-productRouter.get("/", productController.getProductList);
+productRouter.get(
+  "/",
+  validateProduct.validateGetProductList,
+  productController.getProductList,
+);
 
 export default productRouter;

@@ -1,4 +1,4 @@
-import z from "zod";
+import z, { optional } from "zod";
 
 const schema = z.object({
   name: z.string().min(1).max(20),
@@ -23,6 +23,13 @@ const schema = z.object({
       z.array(z.string()),
     )
     .optional(),
+});
+
+const querySchema = z.object({
+  page: z.coerce.number().min(1).default(1),
+  pageSize: z.coerce.number().min(1).default(10),
+  sort: z.enum(["recent", "favorite"]).default("recent"),
+  keyword: z.string().optional(),
 });
 
 const validateCreateProduct = (req, res, next) => {
@@ -58,4 +65,21 @@ const validateUpdateProduct = (req, res, next) => {
   next();
 };
 
-export default { validateCreateProduct, validateUpdateProduct };
+const validateGetProductList = (req, res, next) => {
+  const result = querySchema.safeParse(req.query);
+
+  if (!result.success) {
+    const error = new Error("쿼리 입력값을 확인해주세요.");
+    error.code = 400;
+    error.data = result.error.flatten();
+    return next(error);
+  }
+  req.validateQuery = result.data;
+  next();
+};
+
+export default {
+  validateCreateProduct,
+  validateUpdateProduct,
+  validateGetProductList,
+};

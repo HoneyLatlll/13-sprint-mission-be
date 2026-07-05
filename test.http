@@ -120,4 +120,4 @@ Content-Type: image/jpeg
 ------boundary--
 
 ### 상품 목록 조회
-GET {{BASE_URL}}/products?sort=favorite&keyword=루
+GET {{BASE_URL}}/products?pageSize=5&sort=favorite
