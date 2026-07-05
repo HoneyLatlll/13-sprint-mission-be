@@ -104,7 +104,7 @@ const getProductList = async (req, res, next) => {
   const where = keyword
     ? {
         //insensitive는 영어 검색시 대소문자 구분 X
-        OR: [{ name: { contains: keyword, mode: "insensitive" } }],
+        name: { contains: keyword, mode: "insensitive" },
       }
     : {};
   const sortBy =
