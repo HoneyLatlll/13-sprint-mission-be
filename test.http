@@ -84,8 +84,8 @@ Content-Disposition: form-data; name="tags"
 ------boundary--
 
 ###상품 삭제 테스트
-DELETE {{BASE_URL}}/products/999
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzE1MzA5OCwiZXhwIjoxNzgzMjM5NDk4fQ.Jw0GsyYzfj2zzzWPHFfKOZ3z5fdYCOPN4R8m4f2ApVg
+DELETE {{BASE_URL}}/products/12
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzIyMTQ1OCwiZXhwIjoxNzgzMzA3ODU4fQ.-MJsNDS45ZzSzVZyaGreJ0lJELU8bOrQ0DIWx-DQ3rI
 
 ###상품 수정 테스트
 PATCH {{BASE_URL}}/products/12
