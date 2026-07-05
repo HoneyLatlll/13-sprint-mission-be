@@ -4,6 +4,7 @@ import verifyAccessToken from "../middlewares/auth.js";
 import multer from "multer";
 import path from "path";
 import validateProduct from "../middlewares/validators/product.validator.js";
+import crypto from "crypto";
 
 const productRouter = express.Router();
 
@@ -11,7 +12,8 @@ const storage = multer.diskStorage({
   destination: "uploads/",
   filename: (req, file, cb) => {
     const fileExt = path.extname(file.originalname);
-    cb(null, `${Date.now()}_${fileExt}`);
+    //crypto.randomUUID()로 이미지 동시 업로드시 파일명 겹치는 경우 해결
+    cb(null, `${crypto.randomUUID()}_${fileExt}`);
   },
 });
 const upload = multer({ storage });

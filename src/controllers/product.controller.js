@@ -65,6 +65,8 @@ const updateProduct = async (req, res, next) => {
     return next(error);
   }
 
+  //기존의 유지할 이미지가 없을 경우 undefined가 들어가 .filter 시 에러가 난다 없을 경우 빈배열로 (existingImages ?? []) 만듦
+  //악의적인 사람이 existingImages에 아무 이미지나 넣어도 기존의 이미지로 판단 할 수 있기 때문에 validExistingImages로 기존의 이미지가 맞는지 검증
   const validExistingImages = (existingImages ?? []).filter((img) =>
     product.images.includes(img),
   );

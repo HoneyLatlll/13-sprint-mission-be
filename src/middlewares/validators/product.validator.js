@@ -4,7 +4,7 @@ const schema = z.object({
   name: z.string().min(1).max(20),
   description: z.string().min(1).max(1000),
   price: z.coerce.number().positive(),
-  //태그는 5개까지, 태그 문자열은 1자부터 10자까지 작성해야함 refine으로 태그 중복시 에러 태그가 한 개 일때 multer가 문자열로 넘겨줌
+  //태그는 5개까지, 태그 문자열은 1자부터 10자까지 작성해야함 refine으로 태그 중복시 에러 태그가 한 개 일때 multer가 문자열로 넘겨줌 이를 proprocess로 문자열이면 배열로 만드는것추가
   tags: z
     .preprocess(
       (val) => (typeof val === "string" ? [val] : val),
@@ -16,6 +16,7 @@ const schema = z.object({
         }),
     )
     .optional(),
+  //기존의 이미지 src 저장 배열
   existingImages: z
     .preprocess(
       (val) => (typeof val === "string" ? [val] : val),
@@ -39,6 +40,7 @@ const validateCreateProduct = (req, res, next) => {
     error.code = 400;
     return next(error);
   }
+  //zod검증 통과후 명시적으로 req.body를 교체
   req.body = result.data;
   next();
 };
