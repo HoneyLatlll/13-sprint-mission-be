@@ -45,4 +45,16 @@ productRouter.get(
   productController.getProductList,
 );
 
+productRouter.post(
+  "/:productId/like",
+  verifyAccessToken,
+  productController.likeProduct,
+);
+
+productRouter.delete(
+  "/:productId/like",
+  verifyAccessToken,
+  productController.unlikeProduct,
+);
+
 export default productRouter;

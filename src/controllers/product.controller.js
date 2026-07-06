@@ -123,4 +123,73 @@ const getProductList = async (req, res, next) => {
   res.status(200).json({ list: products, totalProducts });
 };
 
-export default { createProduct, deleteProduct, updateProduct, getProductList };
+const likeProduct = async (req, res, next) => {
+  const { productId } = req.params;
+  const authorId = req.auth.userId;
+
+  const product = await prisma.product.findUnique({
+    where: {
+      id: Number(productId),
+    },
+  });
+
+  if (!product) {
+    const error = new Error("존재하지 않는 상품입니다.");
+    error.code = 404;
+    return next(error);
+  }
+
+  const result = await prisma.$transaction([
+    prisma.product.update({
+      where: { id: Number(productId) },
+      data: { likeCount: { increment: 1 } },
+    }),
+    prisma.like.create({
+      data: { userId: authorId, productId: Number(productId) },
+    }),
+  ]);
+  const isLiked = true;
+
+  res.status(200).json({ ...result[0], isLiked });
+};
+
+const unlikeProduct = async (req, res, next) => {
+  const { productId } = req.params;
+  const authorId = req.auth.userId;
+
+  const product = await prisma.product.findUnique({
+    where: {
+      id: Number(productId),
+    },
+  });
+
+  if (!product) {
+    const error = new Error("존재하지 않는 상품입니다.");
+    error.code = 404;
+    return next(error);
+  }
+
+  const result = await prisma.$transaction([
+    prisma.product.update({
+      where: { id: Number(productId) },
+      data: { likeCount: { decrement: 1 } },
+    }),
+    prisma.like.delete({
+      where: {
+        userId_productId: { userId: authorId, productId: Number(productId) },
+      },
+    }),
+  ]);
+  const isLiked = false;
+
+  res.status(200).json({ ...result[0], isLiked });
+};
+
+export default {
+  createProduct,
+  deleteProduct,
+  updateProduct,
+  getProductList,
+  likeProduct,
+  unlikeProduct,
+};

@@ -5,7 +5,9 @@ export default function errorHandler(error, req, res, next) {
   let status = 500;
 
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
-    status = error.code === "P2002" ? 409 : 500;
+    // status = error.code === "P2002" ? 409 : 500;
+    if (error.code === "P2002") status = 409;
+    if (error.code === "P2025") status = 404;
   }
 
   //이미지 파일 에러 (개수)
