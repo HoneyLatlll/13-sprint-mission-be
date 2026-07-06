@@ -25,6 +25,12 @@ productRouter.post(
   productController.createProduct,
 );
 
+productRouter.get(
+  "/",
+  validateProduct.validateGetProductList,
+  productController.getProductList,
+);
+
 productRouter.delete(
   "/:productId",
   auth.verifyAccessToken,
@@ -39,11 +45,6 @@ productRouter.patch(
   productController.updateProduct,
 );
 
-productRouter.get(
-  "/",
-  validateProduct.validateGetProductList,
-  productController.getProductList,
-);
 productRouter.get(
   "/:productId",
   auth.optionalAccessToken,

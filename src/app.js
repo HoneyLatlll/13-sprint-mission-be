@@ -3,9 +3,11 @@ import "dotenv/config";
 import userRouter from "./routes/user.router.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import productRouter from "./routes/product.router.js";
+import cors from "cors";
 
 const app = express();
 
+app.use(cors({ origin: "http://localhost:3000" }));
 app.use(express.json());
 
 app.use("/users", userRouter);
