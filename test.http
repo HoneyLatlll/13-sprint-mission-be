@@ -122,6 +122,10 @@ Content-Type: image/jpeg
 ### 상품 목록 조회
 GET {{BASE_URL}}/products
 
+### 상품 상세 조회
+GET {{BASE_URL}}/products/13
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzMwMDc5MSwiZXhwIjoxNzgzMzg3MTkxfQ.u6B4Sabv5H2XrYU5rNQyUsetoXpNXddh835d9S4FKRg
+
 ### 상품 좋아요 생성
 POST {{BASE_URL}}/products/13/like
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzMwMDc5MSwiZXhwIjoxNzgzMzg3MTkxfQ.u6B4Sabv5H2XrYU5rNQyUsetoXpNXddh835d9S4FKRg

@@ -123,6 +123,33 @@ const getProductList = async (req, res, next) => {
   res.status(200).json({ list: products, totalProducts });
 };
 
+const getProduct = async (req, res, next) => {
+  const { productId } = req.params;
+  const authorId = req.auth?.userId;
+
+  const product = await prisma.product.findUnique({
+    where: {
+      id: Number(productId),
+    },
+  });
+  if (!product) {
+    const error = new Error("존재하지 않는 상품입니다.");
+    error.code = 404;
+    return next(error);
+  }
+
+  let isLiked = false;
+  if (authorId) {
+    isLiked = !!(await prisma.like.findUnique({
+      where: {
+        userId_productId: { userId: authorId, productId: Number(productId) },
+      },
+    }));
+  }
+
+  res.status(200).json({ ...product, isLiked });
+};
+
 const likeProduct = async (req, res, next) => {
   const { productId } = req.params;
   const authorId = req.auth.userId;
@@ -192,4 +219,5 @@ export default {
   getProductList,
   likeProduct,
   unlikeProduct,
+  getProduct,
 };

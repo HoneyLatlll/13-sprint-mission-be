@@ -1,6 +1,6 @@
 import express from "express";
 import productController from "../controllers/product.controller.js";
-import verifyAccessToken from "../middlewares/auth.js";
+import auth from "../middlewares/auth.js";
 import multer from "multer";
 import path from "path";
 import validateProduct from "../middlewares/validators/product.validator.js";
@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 productRouter.post(
   "/",
-  verifyAccessToken,
+  auth.verifyAccessToken,
   upload.array("images", 3),
   validateProduct.validateCreateProduct,
   productController.createProduct,
@@ -27,13 +27,13 @@ productRouter.post(
 
 productRouter.delete(
   "/:productId",
-  verifyAccessToken,
+  auth.verifyAccessToken,
   productController.deleteProduct,
 );
 
 productRouter.patch(
   "/:productId",
-  verifyAccessToken,
+  auth.verifyAccessToken,
   upload.array("images", 3),
   validateProduct.validateUpdateProduct,
   productController.updateProduct,
@@ -44,16 +44,21 @@ productRouter.get(
   validateProduct.validateGetProductList,
   productController.getProductList,
 );
+productRouter.get(
+  "/:productId",
+  auth.optionalAccessToken,
+  productController.getProduct,
+);
 
 productRouter.post(
   "/:productId/like",
-  verifyAccessToken,
+  auth.verifyAccessToken,
   productController.likeProduct,
 );
 
 productRouter.delete(
   "/:productId/like",
-  verifyAccessToken,
+  auth.verifyAccessToken,
   productController.unlikeProduct,
 );
 

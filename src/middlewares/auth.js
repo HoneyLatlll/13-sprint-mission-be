@@ -5,4 +5,10 @@ const verifyAccessToken = expressjwt({
   algorithms: ["HS256"],
 });
 
-export default verifyAccessToken;
+const optionalAccessToken = expressjwt({
+  secret: process.env.JWT_SECRET,
+  algorithms: ["HS256"],
+  credentialsRequired: false,
+});
+
+export default { verifyAccessToken, optionalAccessToken };
