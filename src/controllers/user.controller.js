@@ -66,4 +66,12 @@ const loginUser = async (req, res, next) => {
   }
 };
 
-export default { createUser, loginUser };
+const getUser = async (req, res, next) => {
+  const userId = req.auth.userId;
+  const userData = await prisma.user.findUnique({ where: { id: userId } });
+  const { encryptedPassword, ...rest } = userData;
+  const safeUserData = rest;
+  res.status(200).json(safeUserData);
+};
+
+export default { createUser, loginUser, getUser };

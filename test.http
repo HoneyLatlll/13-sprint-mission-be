@@ -19,6 +19,11 @@ Content-Type:application/json
   "password":"ratratrat"
 }
 
+### 유저 정보 조회
+GET {{BASE_URL}}/users/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzMwMDc5MSwiZXhwIjoxNzgzMzg3MTkxfQ.u6B4Sabv5H2XrYU5rNQyUsetoXpNXddh835d9S4FKRg
+
+
 ### 상품 등록 테스트 (이미지 2개)
 POST {{BASE_URL}}/products
 Content-Type: multipart/form-data; boundary=----boundary
