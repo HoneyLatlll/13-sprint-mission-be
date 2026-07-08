@@ -4,11 +4,15 @@ import userRouter from "./routes/user.router.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import productRouter from "./routes/product.router.js";
 import cors from "cors";
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "./config/swagger.js";
 
 const app = express();
 
 app.use(cors({ origin: "http://localhost:3000" }));
 app.use(express.json());
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/users", userRouter);
 app.use("/products", productRouter);
