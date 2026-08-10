@@ -1,5 +1,5 @@
 import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
-import { Prisma } from "../generated/prisma/client.js";
+import { Prisma } from "../generated/prisma/client";
 import multer from "multer";
 
 export const errorHandler: ErrorRequestHandler = (

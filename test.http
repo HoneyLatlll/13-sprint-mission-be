@@ -21,7 +21,7 @@ Content-Type:application/json
 
 ### 유저 정보 조회
 GET {{BASE_URL}}/users/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzMwMDc5MSwiZXhwIjoxNzgzMzg3MTkxfQ.u6B4Sabv5H2XrYU5rNQyUsetoXpNXddh835d9S4FKRg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTc4NjM0ODY5MCwiZXhwIjoxNzg2NDM1MDkwfQ.MNzkMC33busUODElcBAMy-RlAj-JZpEW2J0TlBRvba0
 
 
 ### 상품 등록 테스트 (이미지 2개)
@@ -68,7 +68,7 @@ Content-Disposition: form-data; name="tags"
 ### 상품 등록 테스트 (이미지 없음)
 POST {{BASE_URL}}/products
 Content-Type: multipart/form-data; boundary=----boundary
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzE1MzA5OCwiZXhwIjoxNzgzMjM5NDk4fQ.Jw0GsyYzfj2zzzWPHFfKOZ3z5fdYCOPN4R8m4f2ApVg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTc4NjM0ODY5MCwiZXhwIjoxNzg2NDM1MDkwfQ.MNzkMC33busUODElcBAMy-RlAj-JZpEW2J0TlBRvba0
 
 ------boundary
 Content-Disposition: form-data; name="name"

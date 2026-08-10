@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import z from "zod";
-import { CustomError } from "../../utils/customError.js";
+import { CustomError } from "../../utils/customError";
 
 export const schema = z.object({
   name: z.string().min(1).max(20),

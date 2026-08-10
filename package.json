@@ -2,7 +2,6 @@
   "name": "13-sprint-mission-be",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "dev": "tsx watch src/app.ts",
     "build": "tsc",

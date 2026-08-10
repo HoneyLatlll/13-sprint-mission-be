@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { User } from "../generated/prisma/client.js";
+import { User } from "../generated/prisma/client";
 
 const createToken = (user: Pick<User, "id">) => {
   const payload = { userId: user.id };

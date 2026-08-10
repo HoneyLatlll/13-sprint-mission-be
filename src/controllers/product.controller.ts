@@ -1,8 +1,8 @@
-import { prisma } from "../lib/prisma.js";
+import { prisma } from "../lib/prisma";
 import { Request as JwtRequest } from "express-jwt";
 import { NextFunction, Request, Response } from "express";
-import { CustomError } from "../utils/customError.js";
-import { ProductBodyDto } from "../dtos/product.dto.js";
+import { CustomError } from "../utils/customError";
+import { ProductBodyDto } from "../dtos/product.dto";
 
 const createProduct = async (
   req: JwtRequest<{ userId: number }>,

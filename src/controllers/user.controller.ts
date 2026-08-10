@@ -1,9 +1,9 @@
 import bcrypt from "bcrypt";
-import { prisma } from "../lib/prisma.js";
-import createToken from "../utils/token.js";
+import { prisma } from "../lib/prisma";
+import createToken from "../utils/token";
 import { Request, Response } from "express";
-import { CustomError } from "../utils/customError.js";
-import { CreateUserDto, LoginUserDto } from "../dtos/user.dto.js";
+import { CustomError } from "../utils/customError";
+import { CreateUserDto, LoginUserDto } from "../dtos/user.dto";
 import { Request as JwtRequest } from "express-jwt";
 
 const createUser = async (
