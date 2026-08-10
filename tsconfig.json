@@ -8,8 +8,7 @@
     "esModuleInterop": true, // CommonJS 모듈 호환성
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "sourceMap": true, // 디버깅용 소스맵 생성
-    "allowJs": true
+    "sourceMap": true // 디버깅용 소스맵 생성
   },
   "include": ["src/**/*"], // 컴파일 대상 폴더
   "exclude": [
