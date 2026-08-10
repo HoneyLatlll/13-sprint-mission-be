@@ -1,7 +1,7 @@
 import express from "express";
 import "dotenv/config";
 import userRouter from "./routes/user.router.js";
-import errorHandler from "./middlewares/errorHandler.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
 import productRouter from "./routes/product.router.js";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";

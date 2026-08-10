@@ -1,7 +1,13 @@
+import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
 import { Prisma } from "../generated/prisma/client.js";
 import multer from "multer";
 
-export default function errorHandler(error, req, res, next) {
+export const errorHandler: ErrorRequestHandler = (
+  error,
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   let status = 500;
 
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
@@ -31,4 +37,4 @@ export default function errorHandler(error, req, res, next) {
     data: error.data ?? undefined,
     date: new Date(),
   });
-}
+};
