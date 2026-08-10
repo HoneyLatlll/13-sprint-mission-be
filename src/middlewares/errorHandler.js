@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../generated/prisma/client.js";
 import multer from "multer";
 
 export default function errorHandler(error, req, res, next) {

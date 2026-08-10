@@ -1,4 +1,4 @@
-import prisma from "../config/prisma.js";
+import { prisma } from "../lib/prisma.js";
 
 const createProduct = async (req, res, next) => {
   const authorId = req.auth.userId;
