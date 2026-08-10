@@ -1,4 +1,6 @@
-import z, { optional } from "zod";
+import { NextFunction, Request, Response } from "express";
+import z from "zod";
+import { CustomError } from "../../utils/customError.js";
 
 const schema = z.object({
   name: z.string().min(1).max(20),
@@ -32,47 +34,63 @@ const querySchema = z.object({
   keyword: z.string().optional(),
 });
 
-const validateCreateProduct = (req, res, next) => {
+const validateCreateProduct = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const result = schema.safeParse(req.body);
 
   if (!result.success) {
-    const error = new Error("입력값을 확인해주세요.");
-    error.code = 400;
-    //error.flatten()으로 zod에러 상세 이유 데이터 받음
-    error.data = result.error.flatten();
-    return next(error);
+    throw new CustomError(
+      "입력값을 확인해주세요",
+      400,
+      //zod v4에서 flatten()이 deprecated 됨 공식 대체 함수인 z.treeifyError() 사용
+      z.treeifyError(result.error),
+    );
   }
-  if (req.files.length < 1) {
-    const error = new Error("이미지 파일을 1개 이상 등록해주세요");
-    error.code = 400;
-    return next(error);
+
+  //req.files 타입은 원래 배열/객체/undefined 세가지가 섞여있음 (multer가 여러 업로드 방식을 지원해서) 여기선 upload.array만 쓰니까 배열 형태로 as 단언
+  const files = req.files as Express.Multer.File[] | undefined;
+  if (!files || files.length < 1) {
+    throw new CustomError("이미지 파일을 1개 이상 등록해주세요", 400);
   }
   //zod검증 통과후 명시적으로 req.body를 교체
   req.body = result.data;
   next();
 };
 
-const validateUpdateProduct = (req, res, next) => {
+const validateUpdateProduct = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const result = schema.safeParse(req.body);
 
   if (!result.success) {
-    const error = new Error("입력값을 확인해주세요.");
-    error.code = 400;
-    error.data = result.error.flatten();
-    return next(error);
+    throw new CustomError(
+      "입력값을 확인해주세요.",
+      400,
+      z.treeifyError(result.error),
+    );
   }
   req.body = result.data;
   next();
 };
 
-const validateGetProductList = (req, res, next) => {
+const validateGetProductList = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const result = querySchema.safeParse(req.query);
 
   if (!result.success) {
-    const error = new Error("쿼리 입력값을 확인해주세요.");
-    error.code = 400;
-    error.data = result.error.flatten();
-    return next(error);
+    throw new CustomError(
+      "쿼리 입력값을 확인해주세요.",
+      400,
+      z.treeifyError(result.error),
+    );
   }
   req.validateQuery = result.data;
   next();
