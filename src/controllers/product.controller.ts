@@ -1,8 +1,21 @@
 import { prisma } from "../lib/prisma.js";
+import { Request as JwtRequest } from "express-jwt";
+import { NextFunction, Request, Response } from "express";
+import { CustomError } from "../utils/customError.js";
+import { ProductBodyDto } from "../dtos/product.dto.js";
 
-const createProduct = async (req, res, next) => {
+const createProduct = async (
+  req: JwtRequest<{ userId: number }>,
+  res: Response,
+  next: NextFunction,
+) => {
+  if (!req.auth?.userId) {
+    throw new CustomError("인증 정보가 올바르지 않습니다", 401);
+  }
   const authorId = req.auth.userId;
-  const images = req.files.map((file) => `uploads/${file.filename}`);
+  const images = (req.files as Express.Multer.File[]).map(
+    (file) => `uploads/${file.filename}`,
+  );
 
   const createdProduct = await prisma.product.create({
     data: {
@@ -16,7 +29,14 @@ const createProduct = async (req, res, next) => {
   res.status(201).json(createdProduct);
 };
 
-const deleteProduct = async (req, res, next) => {
+const deleteProduct = async (
+  req: JwtRequest<{ userId: number }>,
+  res: Response,
+  next: NextFunction,
+) => {
+  if (!req.auth?.userId) {
+    throw new CustomError("인증 정보가 올바르지 않습니다", 401);
+  }
   const authorId = req.auth.userId;
   const { productId } = req.params;
   const product = await prisma.product.findUnique({
@@ -25,14 +45,10 @@ const deleteProduct = async (req, res, next) => {
     },
   });
   if (!product) {
-    const error = new Error("해당 상품을 찾을 수 없습니다.");
-    error.code = 404;
-    return next(error);
+    throw new CustomError("해당 상품을 찾을 수 없습니다.", 404);
   }
   if (product.authorId !== authorId) {
-    const error = new Error("본인이 등록한 상품이 아닙니다.");
-    error.code = 403; //403은 소유권 불일치 에러
-    return next(error);
+    throw new CustomError("본인이 등록한 상품이 아닙니다.", 403);
   }
   await prisma.product.delete({
     where: {
@@ -42,12 +58,22 @@ const deleteProduct = async (req, res, next) => {
   res.status(200).json({ message: "상품이 삭제되었습니다." });
 };
 
-const updateProduct = async (req, res, next) => {
+const updateProduct = async (
+  req: JwtRequest<{ userId: number }>,
+  res: Response,
+  next: NextFunction,
+) => {
+  if (!req.auth?.userId) {
+    throw new CustomError("인증 정보가 올바르지 않습니다", 401);
+  }
   const authorId = req.auth.userId;
-  const images = req.files.map((file) => `uploads/${file.filename}`);
+  const images = (req.files as Express.Multer.File[]).map(
+    (file) => `uploads/${file.filename}`,
+  );
 
   const { productId } = req.params;
-  const { price, tags, description, name, existingImages } = req.body;
+  const { price, tags, description, name, existingImages }: ProductBodyDto =
+    req.body;
 
   const product = await prisma.product.findUnique({
     where: {
@@ -55,14 +81,10 @@ const updateProduct = async (req, res, next) => {
     },
   });
   if (!product) {
-    const error = new Error("해당 상품을 찾을 수 없습니다.");
-    error.code = 404;
-    return next(error);
+    throw new CustomError("해당 상품을 찾을 수 없습니다.", 404);
   }
   if (product.authorId !== authorId) {
-    const error = new Error("본인이 등록한 상품이 아닙니다.");
-    error.code = 403;
-    return next(error);
+    throw new CustomError("본인이 등록한 상품이 아닙니다.", 403);
   }
 
   //기존의 유지할 이미지가 없을 경우 undefined가 들어가 .filter 시 에러가 난다 없을 경우 빈배열로 (existingImages ?? []) 만듦
@@ -74,9 +96,7 @@ const updateProduct = async (req, res, next) => {
   const finalImages = [...validExistingImages, ...newImages];
 
   if (finalImages.length < 1 || finalImages.length > 3) {
-    const error = new Error("이미지는 최소 1개 이상 3개 이하여야 합니다.");
-    error.code = 400;
-    return next(error);
+    throw new CustomError("이미지는 최소 1개 이상 3개 이하여야합니다.", 400);
   }
 
   const updatedProduct = await prisma.product.update({
@@ -95,20 +115,27 @@ const updateProduct = async (req, res, next) => {
   res.status(200).json(updatedProduct);
 };
 
-const getProductList = async (req, res, next) => {
-  const { page, pageSize, sort, keyword } = req.validateQuery;
+const getProductList = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const { page, pageSize, sort, keyword } = req.validateQuery!;
 
-  const skip = (Number(page) - 1) * Number(pageSize);
-  const take = Number(pageSize);
+  const skip = (page - 1) * pageSize;
+  const take = pageSize;
 
+  //문자열 리터럴 값 뒤에 as const만 붙이면, "insensitive", "desc"가 넓은 string이 아니라 정확히 그 문자열 자체의 타입으로 고정되어서 Prisma가 기대하는 리터럴 타입이랑 맞아떨어진다
   const where = keyword
     ? {
         //insensitive는 영어 검색시 대소문자 구분 X
-        name: { contains: keyword, mode: "insensitive" },
+        name: { contains: keyword, mode: "insensitive" as const },
       }
     : {};
   const sortBy =
-    sort === "favorite" ? { likeCount: "desc" } : { createdAt: "desc" };
+    sort === "favorite"
+      ? { likeCount: "desc" as const }
+      : { createdAt: "desc" as const };
 
   const [products, totalProducts] = await Promise.all([
     prisma.product.findMany({
@@ -123,9 +150,17 @@ const getProductList = async (req, res, next) => {
   res.status(200).json({ list: products, totalProducts });
 };
 
-const getProduct = async (req, res, next) => {
+const getProduct = async (
+  req: JwtRequest<{ userId: number }>,
+  res: Response,
+  next: NextFunction,
+) => {
   const { productId } = req.params;
-  const authorId = req.auth?.userId;
+
+  if (!req.auth?.userId) {
+    throw new CustomError("인증 정보가 올바르지 않습니다", 401);
+  }
+  const authorId = req.auth.userId;
 
   const product = await prisma.product.findUnique({
     where: {
@@ -133,9 +168,7 @@ const getProduct = async (req, res, next) => {
     },
   });
   if (!product) {
-    const error = new Error("존재하지 않는 상품입니다.");
-    error.code = 404;
-    return next(error);
+    throw new CustomError("존재하지 않는 상품입니다.", 404);
   }
 
   let isLiked = false;
@@ -150,8 +183,16 @@ const getProduct = async (req, res, next) => {
   res.status(200).json({ ...product, isLiked });
 };
 
-const likeProduct = async (req, res, next) => {
+const likeProduct = async (
+  req: JwtRequest<{ userId: number }>,
+  res: Response,
+  next: NextFunction,
+) => {
   const { productId } = req.params;
+
+  if (!req.auth?.userId) {
+    throw new CustomError("인증 정보가 올바르지 않습니다", 401);
+  }
   const authorId = req.auth.userId;
 
   const product = await prisma.product.findUnique({
@@ -161,9 +202,7 @@ const likeProduct = async (req, res, next) => {
   });
 
   if (!product) {
-    const error = new Error("존재하지 않는 상품입니다.");
-    error.code = 404;
-    return next(error);
+    throw new CustomError("존재하지 않는 상품입니다.", 404);
   }
 
   const result = await prisma.$transaction([
@@ -180,8 +219,16 @@ const likeProduct = async (req, res, next) => {
   res.status(200).json({ ...result[0], isLiked });
 };
 
-const unlikeProduct = async (req, res, next) => {
+const unlikeProduct = async (
+  req: JwtRequest<{ userId: number }>,
+  res: Response,
+  next: NextFunction,
+) => {
   const { productId } = req.params;
+
+  if (!req.auth?.userId) {
+    throw new CustomError("인증 정보가 올바르지 않습니다", 401);
+  }
   const authorId = req.auth.userId;
 
   const product = await prisma.product.findUnique({
@@ -191,9 +238,7 @@ const unlikeProduct = async (req, res, next) => {
   });
 
   if (!product) {
-    const error = new Error("존재하지 않는 상품입니다.");
-    error.code = 404;
-    return next(error);
+    throw new CustomError("존재하지 않는 상품입니다.", 404);
   }
 
   const result = await prisma.$transaction([

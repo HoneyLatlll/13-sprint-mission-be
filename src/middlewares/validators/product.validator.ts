@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import z from "zod";
 import { CustomError } from "../../utils/customError.js";
 
-const schema = z.object({
+export const schema = z.object({
   name: z.string().min(1).max(20),
   description: z.string().min(1).max(1000),
   price: z.coerce.number().positive(),
