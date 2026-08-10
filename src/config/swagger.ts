@@ -1,6 +1,7 @@
 import swaggerJSDoc from "swagger-jsdoc";
 
-const options = {
+// openapi 3.0 스펙이라 OAS3Options 사용 (단, 내부에 [key: string]:any 가 있어서 필드 오타까지 잡아주지는 않음)
+const options: swaggerJSDoc.OAS3Options = {
   definition: {
     openapi: "3.0.0",
     info: {
@@ -42,7 +43,11 @@ const options = {
             name: { type: "string", example: "아이패드 팝니다" },
             description: { type: "string", example: "거의 새 제품입니다." },
             price: { type: "integer", example: 500000 },
-            tags: { type: "array", items: { type: "string" }, example: ["전자기기"] },
+            tags: {
+              type: "array",
+              items: { type: "string" },
+              example: ["전자기기"],
+            },
             images: {
               type: "array",
               items: { type: "string" },
