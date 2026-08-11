@@ -1,6 +1,7 @@
 import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
 import { Prisma } from "../generated/prisma/client";
 import multer from "multer";
+import jwt from "jsonwebtoken";
 
 export const errorHandler: ErrorRequestHandler = (
   error,
@@ -19,6 +20,11 @@ export const errorHandler: ErrorRequestHandler = (
   //이미지 파일 에러 (개수)
   if (error instanceof multer.MulterError) {
     status = 400;
+  }
+
+  // refreshToken jwt.verify 호출 시 발생하는 에러
+  if (error instanceof jwt.JsonWebTokenError) {
+    status = 401;
   }
 
   //토큰이 만료되거나 없을 때 (jwt 에러)

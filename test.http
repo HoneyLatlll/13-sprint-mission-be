@@ -19,6 +19,14 @@ Content-Type:application/json
   "password":"ratratrat"
 }
 
+### 리프레시 토큰으로 액세스 토큰 재발급 테스트
+POST {{BASE_URL}}/users/refresh
+Content-Type:application/json
+
+{
+  "refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTc4NjQxNTYxMiwiZXhwIjoxNzg2NTAyMDEyfQ.CvBlbc61666qRuk49C_jCKfqewWMPpeWVibrr1l"
+}
+
 ### 유저 정보 조회
 GET {{BASE_URL}}/users/me
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTc4NjM0ODY5MCwiZXhwIjoxNzg2NDM1MDkwfQ.MNzkMC33busUODElcBAMy-RlAj-JZpEW2J0TlBRvba0
