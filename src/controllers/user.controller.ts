@@ -53,11 +53,16 @@ const loginUser = async (req: Request<{}, {}, LoginUserDto>, res: Response) => {
   if (!isMatch) {
     throw new CustomError("등록된 비밀번호가 아닙니다", 401);
   }
+  const refreshToken = createToken(user, "refresh");
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { refreshToken },
+  });
 
   const accessToken = createToken(user);
   const { encryptedPassword, ...rest } = user;
   const safeUserData = rest;
-  res.status(200).json({ userData: safeUserData, accessToken });
+  res.status(200).json({ userData: safeUserData, accessToken, refreshToken });
 };
 
 // express의 기본 Request엔 auth 필드가 없어서 express-jwt가 제공하는 Request<T> 사용
