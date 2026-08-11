@@ -115,5 +115,6 @@ userRouter.get("/me", auth.verifyAccessToken, userController.getUser);
  *               $ref: '#/components/schemas/Error'
  */
 userRouter.post("/login", userController.loginUser);
+userRouter.post("/refresh", userController.refreshToken);
 
 export default userRouter;
