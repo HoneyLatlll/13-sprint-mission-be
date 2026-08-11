@@ -83,7 +83,7 @@ const getUser = async (req: JwtRequest<{ userId: number }>, res: Response) => {
   res.status(200).json(safeUserData);
 };
 
-const refreshToken: RequestHandler = async (req, res, next): Promise<void> => {
+const refreshToken: RequestHandler = async (req, res): Promise<void> => {
   const { refreshToken }: RefreshTokenDto = req.body;
   if (!refreshToken) {
     throw new CustomError("리프레시 토큰이 필요합니다", 401);
@@ -110,4 +110,20 @@ const refreshToken: RequestHandler = async (req, res, next): Promise<void> => {
   res.json({ accessToken: token });
 };
 
-export default { createUser, loginUser, getUser, refreshToken };
+const logoutUser = async (
+  req: JwtRequest<{ userId: number }>,
+  res: Response,
+) => {
+  if (!req.auth?.userId) {
+    throw new CustomError("인증 정보가 올바르지 않습니다", 401);
+  }
+  const userId = req.auth.userId;
+  await prisma.user.update({
+    where: { id: userId },
+    data: { refreshToken: null },
+  });
+
+  res.status(200).json({ message: "로그아웃 되었습니다" });
+};
+
+export default { createUser, loginUser, getUser, refreshToken, logoutUser };

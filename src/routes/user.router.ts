@@ -116,5 +116,6 @@ userRouter.get("/me", auth.verifyAccessToken, userController.getUser);
  */
 userRouter.post("/login", userController.loginUser);
 userRouter.post("/refresh", userController.refreshToken);
+userRouter.post("/logout", auth.verifyAccessToken, userController.logoutUser);
 
 export default userRouter;

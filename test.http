@@ -24,8 +24,12 @@ POST {{BASE_URL}}/users/refresh
 Content-Type:application/json
 
 {
-  "refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTc4NjQxNTYxMiwiZXhwIjoxNzg2NTAyMDEyfQ.CvBlbc61666qRuk49C_jCKfqewWMPpeWVibrr1l"
+  "refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTc4NjQyMzY3OCwiZXhwIjoxNzg2NTEwMDc4fQ.iyZiAiUjqThEbuY1-xjORxEgu892dZV7-HUhuEQQbyQ"
 }
+
+### 로그아웃 테스트
+POST {{BASE_URL}}/users/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTc4NjQyMzU5MCwiZXhwIjoxNzg2NDI3MTkwfQ.ssqG7e2iV0f2JTFsFjk5GL5d2krp_XZcV2x4zheEUxE
 
 ### 유저 정보 조회
 GET {{BASE_URL}}/users/me
