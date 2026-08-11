@@ -27,7 +27,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhd
 ### 상품 등록 테스트 (이미지 2개)
 POST {{BASE_URL}}/products
 Content-Type: multipart/form-data; boundary=----boundary
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzE1MzA5OCwiZXhwIjoxNzgzMjM5NDk4fQ.Jw0GsyYzfj2zzzWPHFfKOZ3z5fdYCOPN4R8m4f2ApVg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTc4NjM0ODY5MCwiZXhwIjoxNzg2NDM1MDkwfQ.MNzkMC33busUODElcBAMy-RlAj-JZpEW2J0TlBRvba0
 
 ------boundary
 Content-Disposition: form-data; name="name"
@@ -89,8 +89,8 @@ Content-Disposition: form-data; name="tags"
 ------boundary--
 
 ###상품 삭제 테스트
-DELETE {{BASE_URL}}/products/12
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzIyMTQ1OCwiZXhwIjoxNzgzMzA3ODU4fQ.-MJsNDS45ZzSzVZyaGreJ0lJELU8bOrQ0DIWx-DQ3rI
+DELETE {{BASE_URL}}/products/16
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTc4NjM0ODY5MCwiZXhwIjoxNzg2NDM1MDkwfQ.MNzkMC33busUODElcBAMy-RlAj-JZpEW2J0TlBRvba0
 
 ###상품 수정 테스트
 PATCH {{BASE_URL}}/products/12
@@ -133,8 +133,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhd
 
 ### 상품 좋아요 생성
 POST {{BASE_URL}}/products/13/like
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzMwMDc5MSwiZXhwIjoxNzgzMzg3MTkxfQ.u6B4Sabv5H2XrYU5rNQyUsetoXpNXddh835d9S4FKRg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTc4NjM0ODY5MCwiZXhwIjoxNzg2NDM1MDkwfQ.MNzkMC33busUODElcBAMy-RlAj-JZpEW2J0TlBRvba0
 
 ### 상품 좋아요 취소
 DELETE {{BASE_URL}}/products/13/like
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc4MzMwMDc5MSwiZXhwIjoxNzgzMzg3MTkxfQ.u6B4Sabv5H2XrYU5rNQyUsetoXpNXddh835d9S4FKRg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTc4NjM0ODY5MCwiZXhwIjoxNzg2NDM1MDkwfQ.MNzkMC33busUODElcBAMy-RlAj-JZpEW2J0TlBRvba0

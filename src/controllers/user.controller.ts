@@ -61,7 +61,8 @@ const loginUser = async (req: Request<{}, {}, LoginUserDto>, res: Response) => {
   });
 
   const accessToken = createToken(user.id);
-  const { encryptedPassword, ...rest } = user;
+  //기존의 리프레쉬토큰 제외
+  const { encryptedPassword, refreshToken: _refreshToken, ...rest } = user;
   const safeUserData = rest;
   res.status(200).json({ userData: safeUserData, accessToken, refreshToken });
 };

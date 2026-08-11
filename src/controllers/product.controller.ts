@@ -104,7 +104,7 @@ const updateProduct = async (
       id: Number(productId),
     },
     data: {
-      price: Number(price),
+      price,
       tags,
       description,
       name,
