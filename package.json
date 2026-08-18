@@ -6,7 +6,9 @@
     "dev": "tsx watch src/app.ts",
     "build": "tsc",
     "start": "node --enable-source-maps dist/app.js",
-    "typecheck:watch": "tsc --noEmit --watch"
+    "typecheck:watch": "tsc --noEmit --watch",
+    "test": "jest",
+    "test:watch": "jest --watchAll"
   },
   "keywords": [],
   "author": "",
@@ -30,15 +32,18 @@
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
     "@types/multer": "^2.2.0",
     "@types/node": "^26.2.0",
     "@types/pg": "^8.21.0",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
     "dotenv": "^17.4.2",
+    "jest": "^30.4.2",
     "nodemon": "^3.1.14",
     "prisma": "^7.9.1",
+    "ts-jest": "^29.4.12",
     "tsx": "^4.23.11",
-    "typescript": "^7.0.2"
+    "typescript": "5.8"
   }
 }
