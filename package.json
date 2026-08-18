@@ -8,9 +8,6 @@
     "start": "node --enable-source-maps dist/app.js",
     "typecheck:watch": "tsc --noEmit --watch"
   },
-  "prisma": {
-    "seed": "node prisma/seed.js"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
