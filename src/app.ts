@@ -1,11 +1,11 @@
 import express from "express";
 import "dotenv/config";
-import userRouter from "./routes/user.router.js";
-import errorHandler from "./middlewares/errorHandler.js";
-import productRouter from "./routes/product.router.js";
+import userRouter from "./routes/user.router";
+import { errorHandler } from "./middlewares/errorHandler";
+import productRouter from "./routes/product.router";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
-import swaggerSpec from "./config/swagger.js";
+import swaggerSpec from "./config/swagger";
 
 const app = express();
 

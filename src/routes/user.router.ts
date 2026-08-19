@@ -1,6 +1,6 @@
 import express from "express";
-import userController from "../controllers/user.controller.js";
-import auth from "../middlewares/auth.js";
+import userController from "../controllers/user.controller";
+import auth from "../middlewares/auth";
 
 const userRouter = express.Router();
 
@@ -115,5 +115,67 @@ userRouter.get("/me", auth.verifyAccessToken, userController.getUser);
  *               $ref: '#/components/schemas/Error'
  */
 userRouter.post("/login", userController.loginUser);
+
+/**
+ * @swagger
+ * /users/refresh:
+ *   post:
+ *     summary: 액세스 토큰 재발급
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [refreshToken]
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: 재발급 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 accessToken:
+ *                   type: string
+ *       401:
+ *         description: 리프레시 토큰 없음/유효하지 않음/DB 저장값과 불일치
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+userRouter.post("/refresh", userController.refreshToken);
+
+/**
+ * @swagger
+ * /users/logout:
+ *   post:
+ *     summary: 로그아웃
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: 로그아웃 성공, DB에 저장된 refreshToken 제거
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       401:
+ *         description: 인증 실패 (accessToken 없음/유효하지 않음)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+userRouter.post("/logout", auth.verifyAccessToken, userController.logoutUser);
 
 export default userRouter;

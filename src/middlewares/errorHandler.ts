@@ -1,7 +1,14 @@
-import { Prisma } from "@prisma/client";
+import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
+import { Prisma } from "../generated/prisma/client";
 import multer from "multer";
+import jwt from "jsonwebtoken";
 
-export default function errorHandler(error, req, res, next) {
+export const errorHandler: ErrorRequestHandler = (
+  error,
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   let status = 500;
 
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
@@ -13,6 +20,11 @@ export default function errorHandler(error, req, res, next) {
   //이미지 파일 에러 (개수)
   if (error instanceof multer.MulterError) {
     status = 400;
+  }
+
+  // refreshToken jwt.verify 호출 시 발생하는 에러
+  if (error instanceof jwt.JsonWebTokenError) {
+    status = 401;
   }
 
   //토큰이 만료되거나 없을 때 (jwt 에러)
@@ -31,4 +43,4 @@ export default function errorHandler(error, req, res, next) {
     data: error.data ?? undefined,
     date: new Date(),
   });
-}
+};
