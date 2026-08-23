@@ -13,8 +13,8 @@ const createProduct = async (
     throw new CustomError("인증 정보가 올바르지 않습니다", 401);
   }
   const authorId = req.auth.userId;
-  const images = (req.files as Express.Multer.File[]).map(
-    (file) => `uploads/${file.filename}`,
+  const images = (req.files as Express.MulterS3.File[]).map(
+    (file) => file.location,
   );
 
   const createdProduct = await prisma.product.create({
@@ -67,8 +67,8 @@ const updateProduct = async (
     throw new CustomError("인증 정보가 올바르지 않습니다", 401);
   }
   const authorId = req.auth.userId;
-  const images = (req.files as Express.Multer.File[]).map(
-    (file) => `uploads/${file.filename}`,
+  const images = (req.files as Express.MulterS3.File[]).map(
+    (file) => file.location,
   );
 
   const { productId } = req.params;

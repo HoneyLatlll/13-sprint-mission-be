@@ -25,7 +25,6 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/users", userRouter);
 app.use("/products", productRouter);
 
-app.use("/uploads", express.static("uploads"));
 app.use(errorHandler);
 
 const port = process.env.PORT ?? 3001;
